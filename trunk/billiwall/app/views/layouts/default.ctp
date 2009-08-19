@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>	
+	<? echo $html->charset(); ?>
+	<title>Billiwall</title>	
+	<? echo $html->css('reset'); ?>	
+	<? echo $html->css('style'); ?>
+	
+	<? echo $javascript->link('jquery'); ?>
+	
+	
+	<style type="text/css">
+		#<? echo $menu_selected_item ?> {
+			color: #ffffff;
+			text-decoration: underline;
+		}
+	</style>	
+</head>	
+
+<body>
+<div id="top_header" style="padding: 0px;">
+	<div id="menu">
+		<a class="menu" href="../users" id="users">Пользователи</a> |
+		<a class="menu" href="../unlimited_tariffs/" id="tariffs">Тарифы</a> |	
+		<a class="menu" href="/tariffs">Логи</a>
+	</div>	
+	<div id="product_information_top"><b>BILLiWall</b> system 0.1<br>&copy; Pavlo Zarichniy, Nikita Bykovskiy<br>Kherson, Ukraine. 2009</div>
+</div>
+<div id="top_menu">
+	<div class="top_menu_button"></div>
+</div>
+
+<div id="content">
+	<?php echo $content_for_layout ?>	
+</div>
+
+</body>
+
+</html><pre>
