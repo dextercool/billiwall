@@ -1,0 +1,104 @@
+body {
+	font: 12px Verdana;
+	padding: 0px;
+	margin: 0px;
+	min-width: 1259px;
+}
+
+/* Шапка */
+#top_header {
+	height: 81px;
+	background: url('../img/header.png');
+	margin: 5px;
+	border: 1px solid #80b3ff;
+	position: relative;	
+}
+
+#menu {
+	float: left;
+	margin-top: 25px;
+	margin-left: 5px;
+	padding: 5px;	
+}
+
+#product_information_top {
+	float: right;
+	font: 11px Verdana;
+	text-align: right;
+	padding: 3px;
+}
+
+#top_menu {
+	text-align: center;
+}
+
+#content {
+	margin: 5px;
+}
+
+A.menu {
+	font-size: 20px;
+	color: #fffc00;	
+}
+
+table.db_table th {
+	font: 12px Verdana;
+	border: 1px solid #acacac;
+	font-weight: bold;
+	padding: 5px;
+}
+
+table.db_table td {
+	border: 1px solid #acacac;
+	padding: 3px;
+}
+
+
+table.form_table td {	
+	padding: 3px;
+	vertical-align: middle;
+}
+
+input, select, textarea {
+	font: 12px Verdana;
+}
+
+h1 {
+	font: 16px Verdana;
+	font-weight: bold;
+	display: block;
+	text-align: center;
+	margin-bottom: 5px;
+}
+
+#loader {
+	display: none;
+	margin: 5px;
+}
+
+.submit {
+	text-align: right;
+}
+
+#flashMessage {
+	font: 11px Verdana;
+	color: #a02c2c;
+	font-weight: bold;
+}
+
+.small {
+	font: 9px Verdana;
+	color: #000000;
+}
+
+.center {
+	text-align: center;
+}
+
+.overflow {
+    overflow: hidden;
+}
+
+table.noborder td {
+    border: none;
+}
