@@ -67,6 +67,7 @@
     margin-top: 0px;
     border: 1px solid #87aade;
     background-color: #e1ebf2;
+    display: none;
     overflow: hidden;
 }
 
@@ -78,14 +79,30 @@
 </style>
 
 <script type="text/javascript">
+    var toolbox_visible=false;
     $(document).ready(function() {
         $(".name_row").mouseover(function() {
-		$("#panel_"+this.id).show();
+	    $("#panel_"+this.id).show();
 	});		
 	$(".name_row").mouseout(function() {			
-	    $("#panel_"+this.id).hide();
+	    $("#panel_"+this.id).hide();	    
         });
     });
+    function toolBoxGo(id) {
+	if (toolbox_visible==false) {
+	    toolbox_visible=true;
+	    showToolBox(id);
+	} else {
+	   toolbox_visible=false;
+	   hideToolBox(id);
+	}
+    }
+    function showToolBox(id) {
+	$("#tool_box_"+id).show();
+    }
+    function hideToolBox(id) {
+	$("#tool_box_"+id).hide();
+    }
 </script>
 
 <div id="body_div">
@@ -109,9 +126,9 @@
 	    <td class="name_row" id="<? echo $user['User']['id'] ?>">
 		<div class="overflow">
 		    <div class="td_name_divs"><? echo $user['User']['real_name'] ?></div>
-		    <div class="actions_panels" id="panel_<? echo $user['User']['id'] ?>"><? echo $html->image('16x16/wrench_screwdriver.png', array('alt'=>'tools')) ?></div>
+		    <div class="actions_panels" id="panel_<? echo $user['User']['id'] ?>"><? echo $html->image('16x16/wrench_screwdriver.png', array('alt'=>'tools', 'onclick'=>'toolBoxGo('.$user['User']['id'].')')) ?></div>
 		</div>
-		<div class="tools">
+		<div class="tools" class="toolboxes" id="tool_box_<? echo $user['User']['id'] ?>">
 		    <? echo $form->create('User', array('action'=>'plus_balance'));
 		    echo $form->input('id', array('type'=>'hidden', 'value'=>$user['User']['id']));
 		    echo $form->input('balance', array('label'=>'Баланс +', 'style'=>'width: 35px;', 'before'=>'<table class="noborder"><tr><td>', 'between'=>'</td><td>', 'after'=>'</td><td>'));
