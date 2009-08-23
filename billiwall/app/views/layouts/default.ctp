@@ -21,11 +21,11 @@
 <body>
 <div id="top_header" style="padding: 0px;">
 	<div id="menu">
-		<a class="menu" href="../users" id="users">Пользователи</a> |
-		<a class="menu" href="../unlimited_tariffs/" id="tariffs">Тарифы</a> |	
-		<a class="menu" href="/tariffs">Логи</a>
+		<? echo $html->link("Пользователи", "../users", array('class'=>'menu', 'id'=>'users')); ?> |
+		<? echo $html->link("Тарифы", "../unlimited_tariffs", array('class'=>'menu', 'id'=>'tariffs')); ?> |
+		<? echo $html->link("Логи", "../logs", array('class'=>'menu', 'id'=>'logs')); ?>
 	</div>	
-	<div id="product_information_top"><b>BILLiWall</b> system 0.1<br>&copy; Pavlo Zarichniy, Nikita Bykovskiy<br>Kherson, Ukraine. 2009</div>
+	<div id="product_information_top"><b>BILLiWall</b> system 0.1<br>&copy; Pavlo Zarichniy, Nikita Bykovsky<br>Kherson, Ukraine. 2009</div>
 </div>
 <div id="top_menu">
 	<div class="top_menu_button"></div>
