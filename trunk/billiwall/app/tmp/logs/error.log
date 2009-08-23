@@ -60,3 +60,7 @@
 2009-08-19 16:49:39 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at D:\xampp\htdocs\billiwall\cake\basics.php:111) in [CORE\cake\libs\controller\controller.php, line 644]
 2009-08-19 17:15:01 Warning: Warning (2): Invalid argument supplied for foreach() in [APP\views\users\take_payment.ctp, line 2]
 2009-08-19 17:15:01 Warning: Warning (2): Invalid argument supplied for foreach() in [APP\views\users\take_payment.ctp, line 2]
+2009-08-23 21:27:56 Warning: Warning (2): ssh2_auth_password() [<a href='http://php.net/function.ssh2-auth-password'>function.ssh2-auth-password</a>]: Authentication failed for  using password in [APP\vendors\mikrotik.php, line 12]
+2009-08-23 21:35:25 Warning: Warning (2): ssh2_auth_password() [<a href='http://php.net/function.ssh2-auth-password'>function.ssh2-auth-password</a>]: Authentication failed for  using password in [APP\vendors\mikrotik.php, line 12]
+2009-08-23 22:09:18 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at D:\xampp\htdocs\billiwall\cake\basics.php:111) in [CORE\cake\libs\controller\controller.php, line 644]
+2009-08-23 22:10:55 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at D:\xampp\htdocs\billiwall\cake\basics.php:111) in [CORE\cake\libs\controller\controller.php, line 644]

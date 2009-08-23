@@ -14,11 +14,12 @@ class UsersController extends AppController {
 	
 	function add() {
 		if (!empty($this->data)) {
-			$this->User->save($this->data);			
+			$this->User->save($this->data);
+			$user=$this->User->find('first');
                         App::import('Vendor', 'mikrotik');
                         $server=new Server();
                         $shell=$server->connect();
-                        $server->addUser($this->User->id, $this->data['User']['local_ip']);                        
+                        $server->addUser($this->User->id, $this->data['User']['local_ip'], $this->data['User']['vpn_ip'], $user['UnlimitedTariff']['upload_speed'], $user['UnlimitedTariff']['download_speed'], $this->data['User']['login'], $this->data['User']['password']);
                         if ($this->data['User']['balance']==0) $server->disableUser($this->User->id);
 			$this->Session->setFlash("Поздравляем с новым пользователем! ;)");
                         $server->doCommands($shell);
@@ -72,6 +73,16 @@ class UsersController extends AppController {
             if (isset($deactivatedUsers)) $this->set('deactivatedUsers', $deactivatedUsers);
         }
 
+	function delete($id=null) {
+	    $this->User->delete($id);
+	    App::import('Vendor', 'mikrotik');
+            $server=new Server();
+            $shell=$server->connect();
+	    $server->deleteUser($id);
+	    $server->doCommands($shell);
+	    $this->Session->setFlash("Пользователь был успешно удалён");
+	    $this->redirect($this->referer());
+	}
 
         function test() {
             App::import('Vendor', 'mikrotik');

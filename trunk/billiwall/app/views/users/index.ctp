@@ -17,6 +17,7 @@
 
 #table_part {
 	float: left;
+	padding: 1px;
 }
 
 #additional_part {
@@ -47,16 +48,15 @@
 }
 
 #body_div {
-	width: 1250px;
-	margin: 0 auto;	
+	margin: 0 auto;
 	margin-top: 20px;
 	margin-bottom: 20px;
-	/* background-color: #723464;
-	#height: 50px; */
+	overflow: hidden;	
 }
+
 .balance {
 	color: #005500;
-	font: 11px Verdana;
+	font: 16px Verdana;
 	font-weight: bold;
 	text-align: center;
 }
@@ -65,7 +65,7 @@
     padding-left: 3px;
     margin: 3px;
     margin-top: 0px;
-    border: 1px solid #b5cb8b;
+    border: 1px solid #87aade;
     background-color: #e1ebf2;
     overflow: hidden;
 }
@@ -98,7 +98,7 @@
 		<th width="100" class="center">Логин</th>		
 		<th width="125" class="center">Local IP</th>
 		<th width="125" class="center">VPN IP</th>
-		<th width="185" class="center">Тарифный план</th>
+		<th width="150" class="center">Тарифный план</th>
 		<th width="75" class="center">Баланс</th>
 	</tr>
 <!-- Табличка со списком юзверей -->
@@ -117,9 +117,9 @@
 		    echo $form->input('balance', array('label'=>'Баланс +', 'style'=>'width: 35px;', 'before'=>'<table class="noborder"><tr><td>', 'between'=>'</td><td>', 'after'=>'</td><td>'));
 		    echo $form->end('грн.').'</td></tr></table>'; ?>
 		    <span class="small">MAC: <b><? echo $user['User']['mac'] ?></b></span><br>
-		    <span class="small">Пароль: <b><? echo $user['User']['password'] ?></b></span><br>
-		    <span class="small">Upload-speed: <b><? echo $user['UnlimitedTariff']['upload_speed'] ?> Kb</b></span><br>
+		    <span class="small">Пароль: <b><? echo $user['User']['password'] ?></b></span><br>		   
 		    <span class="small">Download-speed: <b><? echo $user['UnlimitedTariff']['download_speed'] ?> Kb</b></span><br>
+		    <span class="small">Upload-speed: <b><? echo $user['UnlimitedTariff']['upload_speed'] ?> Kb</b></span><br>
 		    <div class="tools_buttons">
 			<? echo $html->link($html->image("16x16/ticket_pencil.png", array("alt" => "edit", "title" => "Редактировать")), "", array('escape'=>false, 'onclick'=>'javascript: return false;', 'id'=>$id, 'class'=>'edit_links'));
 			   echo $html->link($html->image("16x16/cross.png", array("alt" => "delete", "title" => "Удалить")), array('action'=>'delete', $id), array('escape'=>false), "Вы действительно хотите удалить пользователя ".$user['User']['real_name']."?"); ?>
