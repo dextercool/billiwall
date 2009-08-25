@@ -8,8 +8,9 @@ class Server {
     function connect() {
         if (!function_exists("ssh2_connect")) die("function ssh2_connect doesn't exist");
         $methods = array ( 'kex' => 'diffie-hellman-group1-sha1' );
-        $shell = ssh2_connect($this->host, 22, $methods);	
+        $shell = ssh2_connect($this->host, 22, $methods);
         ssh2_auth_password($shell, $this->login, $this->password) or die("connect error");
+//	$shell="123";
         return $shell;
     }
 
