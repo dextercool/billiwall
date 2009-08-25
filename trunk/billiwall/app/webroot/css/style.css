@@ -102,3 +102,18 @@ h1 {
 table.noborder td {
     border: none;
 }
+
+.unblocked_balance_value {
+    color: #005500;
+    font: 16px Arial;
+    font-weight: bold;
+    text-align: center;
+}
+
+.blocked_balance_value {
+    color: #cc0000;
+    font: 16px Arial;
+    font-weight: bold;
+    text-align: center;
+}
+

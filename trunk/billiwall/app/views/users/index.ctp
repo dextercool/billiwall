@@ -54,13 +54,6 @@
 	/* overflow: hidden;	*/
 }
 
-.balance {
-	color: #005500;
-	font: 16px Arial;
-	font-weight: bold;
-	text-align: center;
-}
-
 .tools {
     padding-left: 3px;
     margin: 3px;
@@ -131,7 +124,9 @@
 	</tr>
 <!-- Табличка со списком юзверей -->
 <? foreach ($users as $user): 
-	$id=$user['User']['id'] ?>
+	$id=$user['User']['id'];
+	if ($user['User']['blocked']==true) $balance_class="blocked_balance_value";
+	    else $balance_class="unblocked_balance_value"; ?>
 	<tr>		
 	    <td class="center"><? echo $user['User']['id'] ?></td>
 	    <td class="name_row" id="<? echo $user['User']['id'] ?>">
@@ -158,7 +153,7 @@
 	    <td class="center"><? echo $user['User']['local_ip'] ?></td>
 	    <td class="center"><? echo $user['User']['vpn_ip'] ?></td>
 	    <td class="center"><? echo $user['UnlimitedTariff']['name'].'<span class="small"> ('.$user['UnlimitedTariff']['value'].')</span>' ?></td>
-	    <td class="balance"><? echo $user['User']['balance'] ?></td>
+	    <td class="<? echo $balance_class ?>"><? echo $user['User']['balance'] ?></td>
 	</tr>
 <? endforeach ?>
 </table>
