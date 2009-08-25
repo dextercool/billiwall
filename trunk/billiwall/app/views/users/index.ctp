@@ -39,7 +39,7 @@
 	border: 1px dashed #acacac;
 	padding: 10px;	
 	background-color: #e1ebf2;
-	
+	overflow: hidden;
 }
 
 #flashMessage {	
@@ -51,12 +51,12 @@
 	margin: 0 auto;
 	margin-top: 20px;
 	margin-bottom: 20px;
-	overflow: hidden;	
+	/* overflow: hidden;	*/
 }
 
 .balance {
 	color: #005500;
-	font: 16px Verdana;
+	font: 16px Arial;
 	font-weight: bold;
 	text-align: center;
 }
@@ -81,13 +81,24 @@
 <script type="text/javascript">
     var toolbox_visible=false;
     $(document).ready(function() {
+	var loader=$("#loader");
         $(".name_row").mouseover(function() {
 	    $("#panel_"+this.id).show();
 	});		
 	$(".name_row").mouseout(function() {			
 	    $("#panel_"+this.id).hide();	    
         });
+	$(".edit_links").click(function(){
+	    loader.show();
+	    $.get("<? echo $html->url(array('action'=>'edit')) ?>/"+this.id, function(data){		
+		var edit_form=$("#edit_form");
+		edit_form.html(data);
+		edit_form.show();
+		loader.hide();
+	    });
+	});
     });
+    
     function toolBoxGo(id) {
 	if (toolbox_visible==false) {
 	    toolbox_visible=true;
@@ -102,7 +113,7 @@
     }
     function hideToolBox(id) {
 	$("#tool_box_"+id).hide();
-    }
+    }    
 </script>
 
 <div id="body_div">
@@ -169,7 +180,8 @@
 		echo $form->input('balance', array('label'=>'Начальный баланс:', 'value'=>'0', 'before'=>'<tr><td>', 'between'=>'</td><td>', 'after'=>'</td></tr>'));
 		echo '<tr><td colspan="2">'.$form->end('В биллинг!').'</td></tr></table>';
 		?>
-	</div>
+	</div></div>
+	<div id="edit_form"></div>
 	<div style="text-align: center; clear: both;"><? echo $html->image("24x24/loader.gif", array('alt'=>'loader', 'id'=>'loader')) ?></div>
 </div>
 

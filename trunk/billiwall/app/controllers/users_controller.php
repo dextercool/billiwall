@@ -73,6 +73,21 @@ class UsersController extends AppController {
             if (isset($deactivatedUsers)) $this->set('deactivatedUsers', $deactivatedUsers);
         }
 
+	function edit($id=null) {
+	    $this->User->id=$id;
+	    if (empty($this->data)) {
+		$this->loadModel('UnlimitedTariff');
+		$this->set('UnlimitedTariffs_list', $this->UnlimitedTariff->find('list', array('fields'=>array('UnlimitedTariff.name'))));
+		$this->data=$this->User->read();
+		$this->set('SelectedUnlimitedTariff', $this->data['User']['unlimited_tariff_id']);
+	    }
+	    else {
+		$this->User->save($this->data);
+		$this->Session->setFlash("Учётная запись пользователя ".$this->data['User']['real_name']." была успешно изменена");
+		$this->redirect($this->referer());
+	    }
+	}
+
 	function delete($id=null) {
 	    $this->User->delete($id);
 	    App::import('Vendor', 'mikrotik');

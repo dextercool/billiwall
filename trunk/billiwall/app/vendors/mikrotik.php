@@ -1,6 +1,6 @@
 <?php
 class Server {
-    var $host="10.100.15.13";
+    var $host="10.0.10.1";
     var $login="billing";
     var $password="101";
     var $command="";

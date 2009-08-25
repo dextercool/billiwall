@@ -20,9 +20,10 @@
 }
 
 #additional_part {
-	float: left;
-	margin-left: 20px;
-	overflow: hidden;
+    overflow: hidden;
+    float: left;
+    margin-left: 20px;
+	
 }
 
 #edit_form {
@@ -58,24 +59,25 @@
 </style>
 
 <script type="text/javascript">
-	$(document).ready(function() {		
-		$(".name_row").mouseover(function() {			
-			$("#panel_"+this.id).show();
-		});		
-		$(".name_row").mouseout(function() {			
-			$("#panel_"+this.id).hide();
+	$(document).ready(function() {
+	    var loader=$("#loader");
+	    var edit_form=$("#edit_form");
+	    $(".edit_links").click(function(){
+		loader.show();
+		$.get("<? echo $html->url(array('action'=>'edit')) ?>/"+this.id, function(data){
+		    edit_form.html(data);
+		    edit_form.show();
+		    loader.hide();
 		});
-		
-		$(".edit_links").click(function(){			
-			$("#loader").show();
-			$.get("edit/"+this.id, function(data){
-				$("#edit_form").empty();				
-				$("#edit_form").append(data);
-				$("#edit_form").show();
-				$("#loader").hide();
-			});
-		});		
+	    });
 	});
+	
+	function panelMouseOver(id) {
+	    $("#panel_"+id).show();
+	}
+	function panelMouseOut (id){
+	    $("#panel_"+id).hide();
+	}
 </script>
 
 <div id="body_div">
@@ -91,10 +93,10 @@
 <? foreach ($unlimited_tariffs as $unlimited_tariff): 
 	$id=$unlimited_tariff['UnlimitedTariff']['id'] ?>
 	<tr>
-		<td class="name_row" id="<? echo $id ?>">		
+	    <td class="name_row" onmouseover="panelMouseOver(<? echo $id ?>)" onmouseout="panelMouseOut(<? echo $id ?>)">
 			<div class="td_name_divs" ><? echo $unlimited_tariff['UnlimitedTariff']['name'] ?></div>
 			<div class="actions_panels" id="panel_<? echo $id ?>">
-				<? echo $html->link($html->image("16x16/ticket_pencil.png", array("alt" => "edit", "title" => "Редактировать")), "", array('escape'=>false, 'onclick'=>'javascript: return false;', 'id'=>$id, 'class'=>'edit_links')); ?>
+				<? echo $html->link($html->image("16x16/ticket_pencil.png", array("alt" => "edit", "title" => "Редактировать")), array('action'=>'edit', $id), array('escape'=>false, 'onclick'=>'javascript: return false;', 'id'=>$id, 'class'=>'edit_links')); ?>
 				<? echo $html->link($html->image("16x16/cross.png", array("alt" => "delete", "title" => "Удалить")), array('action'=>'delete', $id), array('escape'=>false), "Вы действительно хотите удалить тарифный план?"); ?>				
 			</div>		
 		</td>
@@ -123,6 +125,4 @@
 	</div></div>
 	<div id="edit_form"></div>
 	<div style="text-align: center; clear: both;"><? echo $html->image("24x24/loader.gif", array('alt'=>'loader', 'id'=>'loader')) ?></div>
-</div>
-
 </div>
