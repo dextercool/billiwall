@@ -5,7 +5,7 @@ class UnlimitedTariffsController extends AppController {
 	var $components = array( 'RequestHandler' );
 	
 	function index() {
-		$this->set('unlimited_tariffs', $this->UnlimitedTariff->find('all'));
+		$this->set('unlimited_tariffs', $this->UnlimitedTariff->find('all', array('order'=>'value')));
 		$this->set('menu_selected_item', 'tariffs');
 	}
 	
