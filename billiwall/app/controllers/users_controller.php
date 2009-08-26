@@ -22,7 +22,7 @@ class UsersController extends AppController {
                         $server=new Server();
                         $shell=$server->connect();
                         $server->addUser($this->User->id, $this->data['User']['local_ip'], $this->data['User']['vpn_ip'], $user['UnlimitedTariff']['upload_speed'], $user['UnlimitedTariff']['download_speed'], $this->data['User']['login'], $this->data['User']['password']);
-                        if ($this->data['User']['balance']==0) $server->disableUser($this->User->id);
+                        if ($this->data['User']['balance']!=0) $server->enableUser($this->User->id);
 
 			$this->Session->setFlash("Поздравляем с новым пользователем! ;)");
                         $server->doCommands($shell);
