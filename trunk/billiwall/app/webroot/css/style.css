@@ -51,6 +51,7 @@ table.db_table th {
 table.db_table td {
 	border: 1px solid #acacac;
 	padding: 3px;
+	padding-left: 5px;
 	font: 11px Tahoma;
 	vertical-align: middle;
 }
