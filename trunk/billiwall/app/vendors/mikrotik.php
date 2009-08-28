@@ -47,7 +47,7 @@ class Server {
 
     function changeUserSpeed ($id, $upload_speed, $download_speed, $vpn_ip) {
         $this->command.='queue simple remove "'.$id.'"; ';
-	$this->command.='/queue simple add comment="11" max-limit='.$upload_speed.'/'.$download_speed.' name='.$id.' target-addresses='.$vpn_ip.'/32; ';
+	$this->command.='/queue simple add max-limit='.$upload_speed.'/'.$download_speed.' name='.$id.' target-addresses='.$vpn_ip.'/32; ';
     }
 
     function doCommands($shell) {
