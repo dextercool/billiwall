@@ -114,25 +114,35 @@
 <div id="table_part">
 <table class="db_table">
 	<tr>
-		<th width="25" class="center">ID</th>
-		<th width="175">Имя</th>
+		<th width="20" class="center">ID</th>
+		<th width="160">Имя</th>
 		<th width="100" class="center">Логин</th>		
-		<th width="125" class="center">Local IP</th>
-		<th width="125" class="center">VPN IP</th>
+		<th width="100" class="center">Local IP</th>
+		<th width="100" class="center">VPN IP</th>
 		<th width="150" class="center">Тарифный план</th>
-		<th width="75" class="center">Баланс</th>
+		<th width="75" class="center">Отключение</th>
+		<th width="65" class="center">Баланс</th>
 	</tr>
 <!-- Табличка со списком юзверей -->
 <? foreach ($users as $user): 
 	$id=$user['User']['id'];
-	if ($user['User']['blocked']==true) $balance_class="blocked_balance_value";
-	    else $balance_class="unblocked_balance_value"; ?>
+	if ($user['User']['blocked']==true) $balance_class="blocked_balance_value"; else $balance_class="unblocked_balance_value";
+	$days=0;
+	$sum=0;
+	while (($sum+$user['UnlimitedTariff']['value'])<=$user['User']['balance']) {
+	    $sum+=$user['UnlimitedTariff']['value'];
+	    $days++;
+	}
+	 ?>
 	<tr>		
 	    <td class="center"><? echo $user['User']['id'] ?></td>
 	    <td class="name_row" id="<? echo $user['User']['id'] ?>">
 		<div class="overflow">
 		    <div class="td_name_divs"><? echo $user['User']['real_name'] ?></div>
-		    <div class="actions_panels" id="panel_<? echo $user['User']['id'] ?>"><? echo $html->image('16x16/wrench_screwdriver.png', array('alt'=>'tools', 'onclick'=>'toolBoxGo('.$user['User']['id'].')')) ?></div>
+		    <div class="actions_panels" id="panel_<? echo $user['User']['id'] ?>">
+			<? echo $html->link($html->image("16x16/ticket_pencil.png", array("alt" => "edit", "title" => "Редактировать")), "", array('escape'=>false, 'onclick'=>'javascript: return false;', 'id'=>$id, 'class'=>'edit_links'))."&nbsp;";
+			echo $html->image('16x16/wrench_screwdriver.png', array('alt'=>'tools', 'onclick'=>'toolBoxGo('.$user['User']['id'].')')) ?>
+		    </div>
 		</div>
 		<div class="tools" class="toolboxes" id="tool_box_<? echo $user['User']['id'] ?>">
 		    <? echo $form->create('User', array('action'=>'plus_balance'));
@@ -144,8 +154,7 @@
 		    <span class="small">Download-speed: <b><? echo $user['UnlimitedTariff']['download_speed'] ?> Kb</b></span><br>
 		    <span class="small">Upload-speed: <b><? echo $user['UnlimitedTariff']['upload_speed'] ?> Kb</b></span><br>
 		    <div class="tools_buttons">
-			<? echo $html->link($html->image("16x16/ticket_pencil.png", array("alt" => "edit", "title" => "Редактировать")), "", array('escape'=>false, 'onclick'=>'javascript: return false;', 'id'=>$id, 'class'=>'edit_links'));
-			   echo $html->link($html->image("16x16/cross.png", array("alt" => "delete", "title" => "Удалить")), array('action'=>'delete', $id), array('escape'=>false), "Вы действительно хотите удалить пользователя ".$user['User']['real_name']."?"); ?>
+			<? echo $html->link($html->image("16x16/cross.png", array("alt" => "delete", "title" => "Удалить")), array('action'=>'delete', $id), array('escape'=>false), "Вы действительно хотите удалить пользователя ".$user['User']['real_name']."?"); ?>
 		    </div>
 		</div>
 	    </td>
@@ -153,7 +162,8 @@
 	    <td class="center"><? echo $user['User']['local_ip'] ?></td>
 	    <td class="center"><? echo $user['User']['vpn_ip'] ?></td>
 	    <td class="center"><? echo $user['UnlimitedTariff']['name'].'<span class="small"> ('.$user['UnlimitedTariff']['value'].')</span>' ?></td>
-	    <td class="<? echo $balance_class ?>"><? echo $user['User']['balance'] ?></td>
+	    <td class="center"><? if ($user['User']['blocked']==true) echo "-"; else echo date("d-m-Y", strtotime("+".$days." days"))."<br>(<b>".$days."</b> дней)" ?></td>
+	    <td class="center"><span class="<? echo $balance_class ?>"><? echo $user['User']['balance'] ?></span></td>
 	</tr>
 <? endforeach ?>
 </table>
