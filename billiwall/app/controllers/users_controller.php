@@ -99,7 +99,9 @@ class UsersController extends AppController {
                         $server->enableUser($user['User']['id']);                        
                         $this->data['User']['blocked']=false;
                     }
-		//Перезаписываем скорость на сервере		
+		if ($this->data['User']['balance']<$user['UnlimitedTariff']['value']) $this->data['User']['blocked']=false;
+
+		//Перезаписываем скорость на сервере
                 $server->changeUserSpeed($id, $unlimited_tariff['UnlimitedTariff']['upload_speed'], $unlimited_tariff['UnlimitedTariff']['download_speed'], $this->data['User']['vpn_ip']);
                 $server->doCommands($shell);
 
