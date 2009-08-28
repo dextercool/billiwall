@@ -115,7 +115,7 @@
 <table class="db_table">
 	<tr>
 		<th width="20" class="center">ID</th>
-		<th width="160">Имя</th>
+		<th width="165">Имя</th>
 		<th width="100" class="center">Логин</th>		
 		<th width="100" class="center">Local IP</th>
 		<th width="100" class="center">VPN IP</th>

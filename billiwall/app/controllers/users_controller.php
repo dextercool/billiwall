@@ -85,13 +85,21 @@ class UsersController extends AppController {
 		$this->set('SelectedUnlimitedTariff', $this->data['User']['unlimited_tariff_id']);
 	    }
 	    else {
-		//Перезаписываем скорость на сервере
 		App::import('Vendor', 'mikrotik');
                 $server=new Server();
                 $shell=$server->connect();
+
 		$this->loadModel('UnlimitedTariff');
 		$this->UnlimitedTariff->id=$this->data['User']['unlimited_tariff_id'];
 		$unlimited_tariff=$this->UnlimitedTariff->find('first');
+
+		$user=$this->User->find('first');
+		if ($user['User']['blocked']==true)
+                    if ($this->data['User']['balance']>=$user['UnlimitedTariff']['value']) {
+                        $server->enableUser($user['User']['id']);                        
+                        $this->data['User']['blocked']=false;
+                    }
+		//Перезаписываем скорость на сервере		
                 $server->changeUserSpeed($id, $unlimited_tariff['UnlimitedTariff']['upload_speed'], $unlimited_tariff['UnlimitedTariff']['download_speed'], $this->data['User']['vpn_ip']);
                 $server->doCommands($shell);
 
