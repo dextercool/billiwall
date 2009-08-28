@@ -42,7 +42,7 @@ A.menu {
 }
 
 table.db_table th {
-	font: 12px Verdana;
+	font: 11px Tahoma;
 	border: 1px solid #acacac;
 	font-weight: bold;
 	padding: 5px;
@@ -51,6 +51,8 @@ table.db_table th {
 table.db_table td {
 	border: 1px solid #acacac;
 	padding: 3px;
+	font: 11px Tahoma;
+	vertical-align: middle;
 }
 
 
@@ -60,7 +62,7 @@ table.form_table td {
 }
 
 input, select, textarea {
-	font: 12px Verdana;
+	font: 11px Tahoma;
 }
 
 h1 {
