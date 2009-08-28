@@ -90,8 +90,8 @@ class UsersController extends AppController {
                 $server=new Server();
                 $shell=$server->connect();
 		$this->loadModel('UnlimitedTariff');
-		$unlimited_tariff=$this->UnlimitedTariff->id=$this->data['User']['unlimited_tariff_id'];
-		$this->UnlimitedTariff->find('first');
+		$this->UnlimitedTariff->id=$this->data['User']['unlimited_tariff_id']
+		$unlimited_tariff=$this->UnlimitedTariff->find('first');
                 $server->changeUserSpeed($id, $unlimited_tariff['UnlimitedTariff']['upload_speed'], $unlimited_tariff['UnlimitedTariff']['download_speed'], $this->data['User']['vpn_ip']);
                 $server->doCommands($shell);
 
