@@ -45,6 +45,11 @@ class Server {
 	$this->command.='ppp secret remove "'.$id.'"; ';
     }
 
+    function changeUserSpeed ($id, $upload_speed, $download_speed, $vpn_ip) {
+        $this->command.='queue simple remove "'.$id.'"; ';
+	$this->command.='/queue simple add comment="11" max-limit='.$upload_speed.'/'.$download_speed.' name='.$id.' target-addresses='.$vpn_ip.'/32; ';
+    }
+
     function doCommands($shell) {
         $this->sendCommand($shell, $this->command);
     }
