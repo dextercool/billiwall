@@ -1,7 +1,7 @@
 <?
 class NocsController extends AppController {
     var $name='Nocs';
-    var $uses=null;
+    public $uses=null;
     var $helpers = array('Html', 'Javascript', 'Ajax'); 
 
     function index() {
