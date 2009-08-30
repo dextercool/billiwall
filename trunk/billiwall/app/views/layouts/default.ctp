@@ -26,7 +26,7 @@
 		<? echo $html->link("NOC", "../nocs", array('class'=>'menu', 'id'=>'nocs')); ?> |
 		<? echo $html->link("Логи", "../logs", array('class'=>'menu', 'id'=>'logs')); ?>
 	</div>	
-	<div id="product_information_top"><b>BILLiWall</b> system 0.1 (N-300809-2)</div>
+	<div id="product_information_top"><b>BILLiWall</b> system 0.1 (N-300809-3)</div>
 </div>
 <div id="top_menu">
 	<div class="top_menu_button"></div>
