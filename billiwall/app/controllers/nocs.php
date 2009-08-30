@@ -5,7 +5,7 @@ class NocsController extends AppController {
     var $helpers = array('Html', 'Javascript', 'Ajax'); 
 
     function index() {
-	$this->set('nocs', $this->User->find('all'));
+	$this->set('menu_selected_item', 'nocs');
     }
 }
 ?>
