@@ -25,7 +25,7 @@
 		<? echo $html->link("Тарифы", "../unlimited_tariffs", array('class'=>'menu', 'id'=>'tariffs')); ?> |
 		<? echo $html->link("Логи", "../logs", array('class'=>'menu', 'id'=>'logs')); ?>
 	</div>	
-	<div id="product_information_top"><b>BILLiWall</b> system 0.1 (N-280809-4)<br>&copy; Pavlo Zarichniy, Nikita Bykovsky<br>Kherson, Ukraine. 2009</div>
+	<div id="product_information_top"><b>BILLiWall</b> system 0.1 (N-300809-1)</div>
 </div>
 <div id="top_menu">
 	<div class="top_menu_button"></div>
@@ -33,6 +33,9 @@
 
 <div id="content">
 	<?php echo $content_for_layout ?>	
+</div>
+<div id="copyright">
+    © Pavlo Zarichniy, Nikita Bykovsky<br>Kherson, Ukraine. 2009
 </div>
 
 </body>

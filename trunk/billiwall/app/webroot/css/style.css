@@ -2,7 +2,7 @@ body {
 	font: 12px Verdana;
 	padding: 5px;
 	margin: 0px;
-	min-width: 1230px;
+	width: 1250px;	
 }
 
 /* Шапка */
@@ -34,6 +34,14 @@ body {
 
 #content {
 	margin: 5px;
+	overflow: hidden;
+}
+
+#copyright {
+    color: #9a9a9a;
+    font: 11px Tahoma;
+    text-align: center;
+    margin: 20px;
 }
 
 A.menu {

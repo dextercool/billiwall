@@ -52,6 +52,8 @@
 	margin: 0 auto;	
 	margin-top: 20px;
 	margin-bottom: 20px;
+	overflow: hidden;
+	padding: 1px;
 	/* background-color: #723464;
 	#height: 50px; */
 }

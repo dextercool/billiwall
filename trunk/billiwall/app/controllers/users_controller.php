@@ -21,7 +21,7 @@ class UsersController extends AppController {
                         App::import('Vendor', 'mikrotik');
                         $server=new Server();
                         $shell=$server->connect();
-                        $server->addUser($this->User->id, $this->data['User']['local_ip'], $this->data['User']['vpn_ip'], $user['UnlimitedTariff']['upload_speed'], $user['UnlimitedTariff']['download_speed'], $this->data['User']['login'], $this->data['User']['password']);
+                        $server->addUser($this->User->id, $this->data['User']['local_ip'], $this->data['User']['vpn_ip'], $this->data['User']['mac'], $user['UnlimitedTariff']['upload_speed'], $user['UnlimitedTariff']['download_speed'], $this->data['User']['login'], $this->data['User']['password']);
                         if ($this->data['User']['balance']!=0) $server->enableUser($this->User->id);
 
 			$this->Session->setFlash("Поздравляем с новым пользователем! ;)");
@@ -104,8 +104,7 @@ class UsersController extends AppController {
 		    $server->disableUser($id);
 		}
 
-		//Перезаписываем скорость на сервере
-                $server->changeUserSpeed($id, $unlimited_tariff['UnlimitedTariff']['upload_speed'], $unlimited_tariff['UnlimitedTariff']['download_speed'], $this->data['User']['vpn_ip']);
+		$server->editUser($this->User->id, $this->data['User']['local_ip'], $this->data['User']['vpn_ip'], $this->data['User']['mac'], $unlimited_tariff['UnlimitedTariff']['upload_speed'], $unlimited_tariff['UnlimitedTariff']['download_speed'], $this->data['User']['login'], $this->data['User']['password']);
                 $server->doCommands($shell);
 
 		$this->User->save($this->data);
