@@ -23,6 +23,7 @@
 	<div id="menu">
 		<? echo $html->link("Пользователи", "../users", array('class'=>'menu', 'id'=>'users')); ?> |
 		<? echo $html->link("Тарифы", "../unlimited_tariffs", array('class'=>'menu', 'id'=>'tariffs')); ?> |
+		<? echo $html->link("NOC", "../nocs", array('class'=>'menu', 'id'=>'nocs')); ?> |
 		<? echo $html->link("Логи", "../logs", array('class'=>'menu', 'id'=>'logs')); ?>
 	</div>	
 	<div id="product_information_top"><b>BILLiWall</b> system 0.1 (N-300809-1)</div>
