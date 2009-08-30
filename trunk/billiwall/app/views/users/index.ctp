@@ -138,7 +138,7 @@
 	    <td class="center"><? echo $user['User']['id'] ?></td>
 	    <td class="name_row" id="<? echo $user['User']['id'] ?>">
 		<div class="overflow">
-		    <div class="td_name_divs"><? echo $user['User']['real_name'] ?></div>
+		    <div class="td_name_divs"><? echo $user['User']['real_name'] ?><br><span class="comment"><? echo $user['User']['comment'] ?></span></div>
 		    <div class="actions_panels" id="panel_<? echo $user['User']['id'] ?>">
 			<? echo $html->link($html->image("16x16/ticket_pencil.png", array("alt" => "edit", "title" => "Редактировать")), "", array('escape'=>false, 'onclick'=>'javascript: return false;', 'id'=>$id, 'class'=>'edit_links'))."&nbsp;";
 			echo $html->image('16x16/wrench_screwdriver.png', array('alt'=>'tools', 'onclick'=>'toolBoxGo('.$user['User']['id'].')')) ?>
@@ -182,7 +182,8 @@
 		echo $form->input('vpn_ip', array('label'=>'VPN IP:', 'before'=>'<tr><td>', 'between'=>'</td><td>', 'after'=>'</td></tr>'));
 		echo $form->input('mac', array('label'=>'MAC - адрес:', 'before'=>'<tr><td>', 'between'=>'</td><td>', 'after'=>'</td></tr>'));
 		echo "<tr><td>Тарифный план</td><td>".$form->select('unlimited_tariff_id', $UnlimitedTariffs_list)."</td></tr>";
-		echo $form->input('balance', array('label'=>'Начальный баланс:', 'value'=>'0', 'before'=>'<tr><td>', 'between'=>'</td><td>', 'after'=>'</td></tr>'));
+		echo $form->input('balance', array('label'=>'<b>Начальный баланс</b>:', 'value'=>'0', 'before'=>'<tr><td>', 'between'=>'</td><td>', 'after'=>'</td></tr>'));
+		echo $form->input('comment', array('label'=>'Комментарий:', 'cols'=>'25', 'rows'=>'4', 'before'=>'<tr><td>', 'between'=>'</td><td>', 'after'=>'</td></tr>'));
 		echo '<tr><td colspan="2">'.$form->end('В биллинг!').'</td></tr></table>';
 		?>
 	</div></div>
