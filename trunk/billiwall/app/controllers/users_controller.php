@@ -95,12 +95,10 @@ class UsersController extends AppController {
 
 		$user=$this->User->find('first');
 		$server->editUser($this->User->id, $this->data['User']['local_ip'], $this->data['User']['vpn_ip'], $this->data['User']['mac'], $unlimited_tariff['UnlimitedTariff']['upload_speed'], $unlimited_tariff['UnlimitedTariff']['download_speed'], $this->data['User']['login'], $this->data['User']['password']);
-		if ($user['User']['blocked']==true)
-                    if ($this->data['User']['balance']>=$user['UnlimitedTariff']['value']) {
-                        $server->enableUser($user['User']['id']);                        
-                        $this->data['User']['blocked']=false;
-                    }
-		if ($this->data['User']['balance']<$user['UnlimitedTariff']['value']) {
+		if ($this->data['User']['balance']>=$user['UnlimitedTariff']['value']) {
+		    $server->enableUser($user['User']['id']);
+                    $this->data['User']['blocked']=false;
+                } else {
 		    $this->data['User']['blocked']=true;
 		    $server->disableUser($id);
 		}		
