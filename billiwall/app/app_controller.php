@@ -10,7 +10,7 @@ class AppController extends Controller {
 	$this->Auth->userModel = 'User';	
 	$this->Auth->loginRedirect = array('controller' => 'users', 'action' => 'login_router');
 	$this->Auth->loginError = "К сожалению, Вы ошиблись при вводе логина или пароля";
-	$this->Auth->authError = "Извините, но для того, чтобы находиться здесь нужно авторизироваться ;)";
+	$this->Auth->authError = "Извините, но для того, чтобы находиться здесь, нужно авторизироваться ;)";
 	$this->Auth->authorize = 'controller';
     }    
 }
