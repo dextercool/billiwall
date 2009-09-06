@@ -6,7 +6,7 @@ class UsersController extends AppController {
 
     function beforeFilter() {
 	$this->Auth->allow('*');
-	//if ($this->Auth->user('role')!='admin') $this->Auth->deny('index', 'add', 'edit', 'plus_balance', 'delete');
+	if ($this->Auth->user('role')!='admin') $this->Auth->deny('index', 'add', 'edit', 'plus_balance', 'delete');
 	parent::beforeFilter();
     }
 
