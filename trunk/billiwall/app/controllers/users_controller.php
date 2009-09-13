@@ -9,7 +9,7 @@ class UsersController extends AppController {
         $admin_methods=array('index', 'add', 'edit', 'plus_balance', 'delete');
         $users_methods=array('stat');
         if (in_array($this->action, $admin_methods) && $this->Auth->user('role')!='admin') return false;
-        if (in_array($this->action, $users_methods) && ($this->Auth->user('role')!='admin' || $this->Auth->user('role')!='user')) return false;
+        if (in_array($this->action, $users_methods) && $this->Auth->user('role')!='admin' && $this->Auth->user('role')!='user') return false;
         return true;
     }
 
@@ -21,8 +21,8 @@ class UsersController extends AppController {
     }
 
     public function login_router() {
-        if ($userRole=='user') $this->redirect(array('controller' => 'users', 'action'=>'stat'));
-        elseif ($userRole=='admin') $this->redirect(array('controller' => 'users', 'action'=>'index'));
+        if ($this->Auth->user('role')=='user') $this->redirect(array('controller' => 'users', 'action'=>'stat'));
+        elseif ($this->Auth->user('role')=='admin') $this->redirect(array('controller' => 'users', 'action'=>'index'));
     }
 
     function index() {
