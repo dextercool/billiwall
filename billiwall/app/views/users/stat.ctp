@@ -1,1 +1,108 @@
-Привет!
+<style type="text/css">
+    #real_name {
+        padding: 3px;
+        padding-left: 0px;
+        font: 18px Tahoma;
+    }
+
+    .invisible_table td {
+        padding: 2px;
+        padding-left: 0px;
+        padding-right: 5px;
+        font: 11px Tahoma;
+    }
+
+    #stat_userinfo {
+        padding: 15px;
+        padding-top: 10px;
+        background-color: #e2ebf2;
+        float: left;
+    }
+
+    #balance {
+        font: 36px Tahoma;
+        color: #0b7100;
+        font-weight: bold;
+    }
+
+    #stat_credit {
+        margin-top: 20px;
+        padding: 15px;
+        padding-top: 12px;
+        background-color: #ecfbce;
+        float: left;
+    }
+
+    .submit {
+        text-align: center;
+    }
+
+</style>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#stat_userinfo").corner("10px");
+        $("#stat_credit").corner("10px");
+        $("#stat_credit").width($("#stat_userinfo").width());
+    })
+</script>
+
+<? if ($user['UnlimitedTariff']['upload_speed']=='0') $upload_speed="max"; else $upload_speed=$user['UnlimitedTariff']['upload_speed'];
+if ($user['UnlimitedTariff']['download_speed']=='0') $download_speed="max"; else $download_speed=$user['UnlimitedTariff']['download_speed'];
+
+$days=0; $sum=0;
+while (($sum+$user['UnlimitedTariff']['value'])<=$user['User']['balance']) {
+    $sum+=$user['UnlimitedTariff']['value'];
+    $days++;
+}
+if ($user['User']['blocked']==true) $off="-"; else $off=date("d-m-Y", strtotime("+".$days." days"))."</b> (".$days." дней)"
+
+        ?>
+
+<div id="body_div">
+    <div class="container">
+        <!-- Общая статистика пользователя -->
+        <div class="container">
+            <div id="stat_userinfo">
+                <div id="real_name"><b><? echo $user['User']['real_name'] ?></b></div>
+                <div>
+                    <table class="invisible_table">
+                        <tr>
+                            <td>Local IP:</td>
+                            <td><b><? echo $user['User']['local_ip'] ?></b></td>
+                        </tr>
+                        <tr>
+                            <td>VPN IP:</td>
+                            <td><b><? echo $user['User']['vpn_ip'] ?></b></td>
+                        </tr>
+                        <tr>
+                            <td>Тариф:</td>
+                            <td><b><? echo $user['UnlimitedTariff']['name'] ?></b> (<? echo $user['UnlimitedTariff']['value']." грн./день" ?>)</td>
+                        </tr>
+                        <tr>
+                            <td>Отключение:</td>
+                            <td><b><? echo $off ?></b></td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: middle;"><b>Баланс:</b></td>
+                            <td><span id="balance"><? echo $user['User']['balance'] ?></span></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Меню кредитования -->
+        <div class="container">
+            <div id="stat_credit">
+                <div id="real_name">
+                    <? echo $form->create('user', array('action'=>'get_credit'));
+                       echo $form->end('Получить кредит на 3 дня'); ?>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>

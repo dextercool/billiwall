@@ -45,15 +45,7 @@
     #flashMessage {
 	margin-bottom: 10px;
 	text-align: center;
-    }
-
-    #body_div {
-	margin: 0 auto;
-	margin-top: 20px;
-	margin-bottom: 20px;
-	/* overflow: hidden;	*/
-    }
-
+    }    
     .tools {
 	padding-left: 3px;
 	margin: 3px;
@@ -153,6 +145,7 @@
 			<span class="small">Пароль: <b><? echo $user['User']['password'] ?></b></span><br>
 			<span class="small">Download-speed: <b><? echo $user['UnlimitedTariff']['download_speed'] ?> Kb</b></span><br>
 			<span class="small">Upload-speed: <b><? echo $user['UnlimitedTariff']['upload_speed'] ?> Kb</b></span><br>
+			<div class="lefted"><? echo $form->create('user', 'make_sub_admin').$form->input('id', array('value'=>$user['User']['id'])).$form->end('Сделать админом'); ?></div>
 			<div class="tools_buttons">
 				<? echo $html->link($html->image("16x16/cross.png", array("alt" => "delete", "title" => "Удалить")), array('action'=>'delete', $id), array('escape'=>false), "Вы действительно хотите удалить пользователя ".$user['User']['real_name']."?"); ?>
 			</div>

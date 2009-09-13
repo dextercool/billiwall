@@ -15,22 +15,32 @@ body {
 }
 
 #menu {
-    float: left;
-    margin-top: 25px;
+    margin-top: 7px;
     margin-left: 5px;
     padding: 5px;
+
 }
 
-.logout {
-    font-size: 20px;
-    color: #ffffff;
+
+#menu_left {
+    float: left;    
+}
+
+#menu_right {
+    float: right;           
+    height: 15px;    
 }
 
 #product_information_top {
     float: right;
     font: 11px Verdana;
     text-align: right;
-    padding: 3px;
+    padding: 3px;        
+}
+
+.container {
+    overflow: hidden;
+    clear: both;
 }
 
 #top_menu {
@@ -54,6 +64,12 @@ A.menu {
     color: #fffc00;
 }
 
+A.logout {    
+    color: #ffff00;
+    font-weight: normal;
+    font: 16px Tahoma;
+}
+
 table.db_table th {
     font: 11px Tahoma;
     border: 1px solid #acacac;
@@ -69,6 +85,12 @@ table.db_table td {
     vertical-align: middle;
 }
 
+#body_div {
+    margin: 0 auto;
+    margin-top: 15px;
+    margin-bottom: 20px;
+    /* overflow: hidden;	*/
+}
 
 table.form_table td {	
     padding: 3px;
@@ -155,5 +177,10 @@ table.noborder td {
 
 .warning_text {
     color: #990000;
+}
+
+.lefted {
+    float: left;
+    color: red;
 }
 
