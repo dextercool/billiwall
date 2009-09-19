@@ -4,6 +4,10 @@ class UsersController extends AppController {
     var $helpers = array('Html', 'Javascript', 'Ajax');
     var $components = array( 'RequestHandler' );
 
+    function beforeFilter() {
+        $this->Auth->allow('take_payment');
+        parent::beforeFilter();
+    }
 
     function isAuthorized() {
         $admin_methods=array('index', 'add', 'edit', 'plus_balance', 'delete');
