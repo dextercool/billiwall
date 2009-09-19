@@ -13,7 +13,7 @@ class UsersController extends AppController {
         return true;
     }
 
-    function login() {    
+    function login() {
     }
 
     function logout() {
@@ -130,6 +130,31 @@ class UsersController extends AppController {
         $this->set('menu_selected_item', 'stat');
         $this->User->id=$this->Auth->user('id');
         $this->set('user', $this->User->find('first'));
+    }
+
+    function take_payment() {
+        if ($_SERVER['REMOTE_ADDR']=='10.0.10.1') {
+            $users=$this->User->find('all');
+            foreach ($users as $user) {
+                if ($user['User']['blocked']==false) {
+                    if ($user['User']['balance']>=$user['UnlimitedTariff']['value']) {
+                        $user['User']['balance']=$user['User']['balance']-$user['UnlimitedTariff']['value'];
+                        $this->User->save($user);
+                    }
+                    if ($user['User']['balance']<$user['UnlimitedTariff']['value']) {
+                        App::import('Vendor', 'mikrotik');
+                        $server=new Server();
+                        $shell=$server->connect();
+                        $server->disableUser($user['User']['id']);
+                        $server->doCommands($shell);
+                        $deactivatedUsers[]=$user['User']['real_name'];
+                        $user['User']['blocked']=true;
+                        $this->User->save($user);
+                    }
+                }
+            }
+            if (isset($deactivatedUsers)) $this->set('deactivatedUsers', $deactivatedUsers);
+        }
     }
 }
 ?>
