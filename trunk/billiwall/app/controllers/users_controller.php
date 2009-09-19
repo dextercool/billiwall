@@ -9,27 +9,7 @@ class UsersController extends AppController {
         parent::beforeFilter();
     }
 
-    function isAuthorized() {
-        $admin_methods=array('index', 'add', 'edit', 'plus_balance', 'delete');
-        $users_methods=array('stat');
-        if (in_array($this->action, $admin_methods) && $this->Auth->user('role')!='admin') return false;
-        if (in_array($this->action, $users_methods) && $this->Auth->user('role')!='admin' && $this->Auth->user('role')!='user') return false;
-        return true;
-    }
-
-    function login() {
-    }
-
-    function logout() {
-        $this->redirect($this->Auth->logout());
-    }
-
-    public function login_router() {
-        if ($this->Auth->user('role')=='user') $this->redirect(array('controller' => 'users', 'action'=>'stat'));
-        elseif ($this->Auth->user('role')=='admin') $this->redirect(array('controller' => 'users', 'action'=>'index'));
-    }
-
-    function index() {
+    function index() {        
         $this->set('users', $this->User->find('all'));
         $this->set('menu_selected_item', 'users');
         //Using UnlimitedTariff model to generate it's list
@@ -77,10 +57,6 @@ class UsersController extends AppController {
             $this->Session->setFlash("Баланс пользователя ".$user['User']['real_name']." был увеличен на ".$sum." грн.");
             $this->redirect($this->referer());
         }
-
-    }
-
-    function new_sub_admin($id=null) {
 
     }
 
@@ -159,6 +135,42 @@ class UsersController extends AppController {
             }
             if (isset($deactivatedUsers)) $this->set('deactivatedUsers', $deactivatedUsers);
         }
+    }
+
+    function isAuthorized() {
+        $admin_methods=array('new_sub_admin', 'cancel_sub_admin');
+        $sub_admin_methods=array('index', 'add', 'edit', 'plus_balance', 'delete');
+        $users_methods=array('stat');
+        if (in_array($this->action, $admin_methods) && $this->Auth->user('role')!='admin') return false;
+        if (in_array($this->action, $sub_admin_methods) && $this->Auth->user('role')!='sub_admin' && $this->Auth->user('role')!='admin') return false;
+        if (in_array($this->action, $users_methods) && $this->Auth->user('role')!='admin' && $this->Auth->user('role')!='user' && $this->Auth->user('role')!='sub_admin') return false;
+        return true;
+    }
+
+    function new_sub_admin() {
+        if (!empty($this->data)) {
+            $this->data['User']['role']='sub_admin';
+            $this->User->save($this->data);
+            $this->redirect($this->referer());
+        }
+    }
+
+     function cancel_sub_admin() {
+        if (!empty($this->data)) {
+            $this->data['User']['role']='user';
+            $this->User->save($this->data);
+            $this->redirect($this->referer());
+        }
+    }
+
+    function login() {
+        if ($this->Auth->user('role')=='user') $this->redirect(array('action'=>'stat'));
+        elseif ($this->Auth->user('role')=='admin') $this->redirect(array('action'=>'index'));
+        elseif ($this->Auth->user('role')=='sub_admin') $this->redirect(array('action'=>'index'));
+    }
+
+    function logout() {
+        $this->redirect($this->Auth->logout());
     }
 }
 ?>
