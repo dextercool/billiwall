@@ -165,7 +165,8 @@
                 <td class="center"><? echo $user['User']['vpn_ip'] ?></td>
                 <td class="center"><? echo $user['UnlimitedTariff']['name'].'<span class="small"> ('.$user['UnlimitedTariff']['value'].')</span>' ?></td>
                 <td class="center"><? if ($user['User']['blocked']==true) echo "-"; else echo date("d-m-Y", strtotime("+".$days." days"))."<br>(<b>".$days."</b> дней)" ?></td>
-                <td class="center"><span class="<? echo $balance_class ?>"><? echo $user['User']['balance'] ?></span></td>
+                <td class="center"><span class="<? echo $balance_class ?>"><? echo $user['User']['balance'] ?></span>
+                                                <? if ($user['User']['credit_balance']>0) echo '<br>Кредит: <b>'.$user['User']['credit_balance'].'</b>' ?></td>
             </tr>
             <? endforeach ?>
         </table>

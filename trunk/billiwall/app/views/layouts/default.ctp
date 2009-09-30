@@ -22,7 +22,7 @@
     <body>        
         <div id="top_header">
             <div class="container">
-                <div id="product_information_top"><b>BILLiWall</b> system 0.1 (N-130909-1)</div>
+                <div id="product_information_top"><b>BILLiWall</b> system 0.1 (N-300909-1)</div>
             </div>
             <? echo $this->element('menu'); ?>
         </div>
