@@ -9,7 +9,7 @@ class UsersController extends AppController {
         parent::beforeFilter();
     }
 
-    function index() {        
+    function index() {
         $this->set('users', $this->User->find('all'));
         $this->set('menu_selected_item', 'users');
         //Using UnlimitedTariff model to generate it's list
@@ -41,7 +41,13 @@ class UsersController extends AppController {
         if (!empty($this->data)) {
             $this->User->id=$this->data['User']['id'];
             $user=$this->User->find('first');
-            $sum=$this->data['User']['balance'];
+            if ($user['User']['credit_balance']<=$this->data['User']['balance']) {
+                $sum=$this->data['User']['balance']-$user['User']['credit_balance'];
+                $this->data['User']['credit_balance']=0;
+            } else {
+                $sum=0;
+                $this->data['User']['credit_balance']=$user['User']['credit_balance']-$this->data['User']['balance'];
+            }                        
             $newBalance=$user['User']['balance']+$sum;
             $this->data['User']['balance']=$newBalance;
             if ($user['User']['blocked']==true)
@@ -112,6 +118,29 @@ class UsersController extends AppController {
         $this->set('user', $this->User->find('first'));
     }
 
+    function get_credit($id=null) {
+        $this->User->id=$id;
+        $user=$this->User->find('first');
+        if ($user['User']['credit_balance']==0) {
+            $credit_sum=$user['UnlimitedTariff']['value']*3;
+            $this->data['User']['credit_balance']=$credit_sum;
+            $this->data['User']['balance']=$user['User']['balance']+$credit_sum;
+            $this->data['User']['blocked']=false;
+            $this->User->save($this->data);
+
+            if ($user['User']['blocked']==true ) {
+                App::import('Vendor', 'mikrotik');
+                $server=new Server();
+                $shell=$server->connect();
+                $server->enableUser($user['User']['id']);
+                $server->doCommands($shell);
+            }
+
+            $this->Session->setFlash('Кредит, необходимый для 3-х дней работы был Вами успешно получен!');
+        } else $this->Session->setFlash('Извините, но у Вас есть не закрыт предыдущий кредит!');
+        $this->redirect($this->referer());
+    }
+
     function take_payment() {
         if ($_SERVER['REMOTE_ADDR']=='10.0.10.1') {
             $users=$this->User->find('all');
@@ -155,7 +184,7 @@ class UsersController extends AppController {
         }
     }
 
-     function cancel_sub_admin() {
+    function cancel_sub_admin() {
         if (!empty($this->data)) {
             $this->data['User']['role']='user';
             $this->User->save($this->data);

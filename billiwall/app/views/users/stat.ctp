@@ -61,47 +61,57 @@ if ($user['User']['blocked']==true) $off="-"; else $off=date("d-m-Y", strtotime(
 
 <div id="body_div">
     <div class="container">
-        <!-- Общая статистика пользователя -->
-        <div class="container">
-            <div id="stat_userinfo">
-                <div id="real_name"><b><? echo $user['User']['real_name'] ?></b></div>
-                <div>
-                    <table class="invisible_table">
-                        <tr>
-                            <td>Local IP:</td>
-                            <td><b><? echo $user['User']['local_ip'] ?></b></td>
-                        </tr>
-                        <tr>
-                            <td>VPN IP:</td>
-                            <td><b><? echo $user['User']['vpn_ip'] ?></b></td>
-                        </tr>
-                        <tr>
-                            <td>Тариф:</td>
-                            <td><b><? echo $user['UnlimitedTariff']['name'] ?></b> (<? echo $user['UnlimitedTariff']['value']." грн./день" ?>)</td>
-                        </tr>
-                        <tr>
-                            <td>Отключение:</td>
-                            <td><b><? echo $off ?></b></td>
-                        </tr>
-                        <tr>
-                            <td style="vertical-align: middle;"><b>Баланс:</b></td>
-                            <td><span id="balance"><? echo $user['User']['balance'] ?></span></td>
-                        </tr>
-                    </table>
+        <div style="float: left; margin-right: 20px;">
+            <!-- Общая статистика пользователя -->
+            <div class="container">
+                <div id="stat_userinfo">
+                    <div id="real_name"><b><? echo $user['User']['real_name'] ?></b></div>
+                    <div>
+                        <table class="invisible_table">
+                            <tr>
+                                <td>Local IP:</td>
+                                <td><b><? echo $user['User']['local_ip'] ?></b></td>
+                            </tr>
+                            <tr>
+                                <td>VPN IP:</td>
+                                <td><b><? echo $user['User']['vpn_ip'] ?></b></td>
+                            </tr>
+                            <tr>
+                                <td>Тариф:</td>
+                                <td><b><? echo $user['UnlimitedTariff']['name'] ?></b> (<? echo $user['UnlimitedTariff']['value']." грн./день" ?>)</td>
+                            </tr>
+                            <tr>
+                                <td>Отключение:</td>
+                                <td><b><? echo $off ?></b></td>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align: middle;"><b>Баланс:</b></td>
+                                <td><span id="balance" <? if ($user['User']['blocked']==1) echo 'style="color: #cc0000;"'?>><? echo $user['User']['balance'] ?></span></td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
+
+            <? if ($user['User']['credit_balance']==0 && $user['User']['balance']<=($user['UnlimitedTariff']['value']*2)) {  ?>
+            <!-- Меню кредитования -->
+            <div class="container">
+                <div id="stat_credit">
+                    <div id="real_name">
+                            <? echo $form->create('user', array('action'=>'get_credit/'.$user['User']['id']));
+                            echo $form->end('Получить кредит на 3 дня'); ?>
+                    </div>
+                </div>
+            </div>
+            <? } ?>
         </div>
-
-
-        <!-- Меню кредитования -->
-        <div class="container">
-            <div id="stat_credit">
-                <div id="real_name">
-                    <? echo $form->create('user', array('action'=>'get_credit'));
-                       echo $form->end('Получить кредит на 3 дня'); ?>
-                </div>
-            </div>
-
+        <div style="float: left; max-width: 950px; text-align: center;">
+            <? $session->flash(); ?>
+            <b>Дорогой пользователь нашей сети! Мы ради приветствовать Вас на нашем биллинге!</b><br><br>
+            Обращаем Ваше внимание на то, что это - базовая версия нашей нашей системы, которая не является стабильной и полнофункциональной. <br>
+            Если Вы заметили какую-то проблему в её работе - пожалуйста, сообщите нам по электронной почте <a href="mailto:p.zarichniy@gmail.com">p.zarichniy@gmail.com</a>
+            или <a href="mailto:kabal@globalnet.ks.ua">kabal@globalnet.ks.ua</a>.
+            
         </div>
 
     </div>
