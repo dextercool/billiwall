@@ -1,8 +1,7 @@
 <? if ($userRole=='user') { ?>
 <div id="menu">
     <div id="menu_left">
-            <? echo $html->link("Текущая статистика", "/users/stat", array('class'=>'menu', 'id'=>'stat')); ?> |
-            <? echo $html->link("Тикеты", "/users/stat", array('class'=>'menu', 'id'=>'finance_operation')); ?>
+            <? echo $html->link("Текущая статистика", "/users/stat", array('class'=>'menu', 'id'=>'stat')); ?>
     </div>
     <div id="menu_right"><? echo $html->link($html->image("32x32/logout.png", array("alt" => "exit", "title" => "Выход")), "/users/logout", array('escape'=>false)); ?></div>
 </div>
