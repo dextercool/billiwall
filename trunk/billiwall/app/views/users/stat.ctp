@@ -107,7 +107,7 @@ if ($user['User']['blocked']==true) $off="-"; else $off=date("d-m-Y", strtotime(
         </div>
         <div style="float: left; max-width: 950px; text-align: center;">
             <? $session->flash(); ?>
-            <b>Дорогой пользователь нашей сети! Мы ради приветствовать Вас на нашем биллинге!</b><br><br>
+            <b>Дорогой пользователь нашей сети! Мы рады приветствовать Вас на нашем биллинге!</b><br><br>
             Обращаем Ваше внимание на то, что это - базовая версия нашей нашей системы, которая не является стабильной и полнофункциональной. <br>
             Если Вы заметили какую-то проблему в её работе - пожалуйста, сообщите нам по электронной почте <a href="mailto:p.zarichniy@gmail.com">p.zarichniy@gmail.com</a>
             или <a href="mailto:kabal@globalnet.ks.ua">kabal@globalnet.ks.ua</a>.
