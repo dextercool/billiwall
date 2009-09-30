@@ -86,7 +86,7 @@ if ($user['User']['blocked']==true) $off="-"; else $off=date("d-m-Y", strtotime(
                             </tr>
                             <tr>
                                 <td style="vertical-align: middle;"><b>Баланс:</b></td>
-                                <td><span id="balance" <? if ($user['User']['blocked']==1) echo 'style="color: #cc0000;"'?>><? echo $user['User']['balance'] ?></span></td>
+                                <td><span id="balance" <? if ($user['User']['blocked']==1) echo 'style="color: #cc0000;"'?>><? echo $user['User']['balance'] ?></span> грн.</td>
                             </tr>
                         </table>
                     </div>
