@@ -4,10 +4,9 @@ class UnlimitedTariffsController extends AppController {
     var $helpers = array('Html', 'Javascript', 'Ajax');
     var $components = array( 'RequestHandler' );
 
-    function beforeFilter() {
-	$this->Auth->allow('*');
-	if ($this->Auth->user('role')!='admin') $this->Auth->deny('index', 'edit', 'add', 'delete');
-	parent::beforeFilter();
+    function isAuthorized() {
+        if ($this->Auth->user('role')!='admin' && $this->Auth->user('role')!='sub_admin') $this->redirect(array('controller'=>'users', 'action'=>'login'));
+        else return true;
     }
 
     function index() {

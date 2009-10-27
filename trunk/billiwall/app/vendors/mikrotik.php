@@ -1,8 +1,8 @@
 <?php
 class Server {
     var $host="10.0.10.1";
-    var $login="billing";
-    var $password="101";
+    var $login_access="billing";
+    var $password_access="101";
     var $command="";
 
     var $id;
@@ -17,9 +17,9 @@ class Server {
     function connect() {
         if (!function_exists("ssh2_connect")) die("function ssh2_connect doesn't exist");
         $methods = array ( 'kex' => 'diffie-hellman-group1-sha1' );
-//        $shell = ssh2_connect($this->host, 22, $methods);
-//        ssh2_auth_password($shell, $this->login, $this->password) or die("connect error");
-	$shell=1;
+        $shell = ssh2_connect($this->host, 22, $methods);
+        ssh2_auth_password($shell, $this->login_access, $this->password_access) or die("connect error");
+	//$shell=1;
         return $shell;
     }
 
@@ -35,7 +35,7 @@ class Server {
     }
 
     function addUser() {
-        $this->command.='ip firewall address-list add address='.$this->vpn_ip.' list=access-vpn comment='.$this->id.'; ';
+        $this->command.='ip firewall address-list add address='.$this->vpn_ip.' list=vpn-access comment='.$this->id.'; ';
 	$this->command.='queue simple add max-limit='.$this->upload_speed.'000/'.$this->download_speed.'000 name='.$this->id.' target-addresses='.$this->vpn_ip.'/32; ';
 	$this->command.='ppp secret add caller-id='.$this->local_ip.' comment="'.$this->id.'" name='.$this->login.' password='.$this->password.' profile=global-vpn remote-address='.$this->vpn_ip.' service=pptp; ';
 	$this->command.='ip dhcp-server lease add address='.$this->local_ip.' comment="'.$this->id.'" disabled=no mac-address='.$this->mac.'; ';
@@ -71,7 +71,7 @@ class Server {
     }
 
     function doCommands($shell) {
-//        $this->sendCommand($shell, $this->command);
+        $this->sendCommand($shell, $this->command);
     }
 }
 ?>

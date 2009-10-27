@@ -1,6 +1,6 @@
 <?
 class User extends AppModel {
 	var $name='User';
-	var $belongsTo='UnlimitedTariff';
+	var $belongsTo=array('UnlimitedTariff', 'Street');
 }
 ?>
