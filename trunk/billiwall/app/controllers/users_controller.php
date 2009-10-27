@@ -78,7 +78,7 @@ class UsersController extends AppController {
                     $this->data['User']['blocked']=false;
                 }
             $this->User->save($this->data);
-            $this->Session->setFlash("Баланс пользователя ".$user['User']['real_name']." был увеличен на ".$sum." грн.");
+            $this->Session->setFlash("Баланс пользователя был увеличен на ".$sum." грн.");
             $this->redirect($this->referer());
         }
 
