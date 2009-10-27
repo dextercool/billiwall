@@ -5,12 +5,21 @@ class Server {
     var $password="101";
     var $command="";
 
+    var $id;
+    var $local_ip;
+    var $vpn_ip;
+    var $mac;
+    var $upload_speed;
+    var $download_speed;
+    var $login;
+    var $password;
+
     function connect() {
         if (!function_exists("ssh2_connect")) die("function ssh2_connect doesn't exist");
         $methods = array ( 'kex' => 'diffie-hellman-group1-sha1' );
-        $shell = ssh2_connect($this->host, 22, $methods);
-        ssh2_auth_password($shell, $this->login, $this->password) or die("connect error");
-	//$shell=1;
+//        $shell = ssh2_connect($this->host, 22, $methods);
+//        ssh2_auth_password($shell, $this->login, $this->password) or die("connect error");
+	$shell=1;
         return $shell;
     }
 
@@ -25,42 +34,44 @@ class Server {
         return $data;
     }
 
-    function addUser($id, $local_ip, $vpn_ip, $mac, $upload_speed, $download_speed, $login, $password) {
-        $this->command.='ip firewall address-list add address='.$local_ip.' list=access comment='.$id.'; ';
-	$this->command.='queue simple add max-limit='.$upload_speed.'000/'.$download_speed.'000 name='.$id.' target-addresses='.$vpn_ip.'/32; ';
-	$this->command.='ppp secret add caller-id='.$local_ip.' comment="'.$id.'" name='.$login.' password='.$password.' profile=global-vpn remote-address='.$vpn_ip.' service=pptp; ';
-	$this->command.='ip dhcp-server lease add address='.$local_ip.' comment="'.$id.'" disabled=no mac-address='.$mac.'; ';
+    function addUser() {
+        $this->command.='ip firewall address-list add address='.$this->vpn_ip.' list=access-vpn comment='.$this->id.'; ';
+	$this->command.='queue simple add max-limit='.$this->upload_speed.'000/'.$this->download_speed.'000 name='.$this->id.' target-addresses='.$this->vpn_ip.'/32; ';
+	$this->command.='ppp secret add caller-id='.$this->local_ip.' comment="'.$this->id.'" name='.$this->login.' password='.$this->password.' profile=global-vpn remote-address='.$this->vpn_ip.' service=pptp; ';
+	$this->command.='ip dhcp-server lease add address='.$this->local_ip.' comment="'.$this->id.'" disabled=no mac-address='.$this->mac.'; ';
 	//$this->command.='ip arp add address='.$local_ip.' comment="'.$id.'" disabled=no interface=LAN mac-address='.$mac.'; ';
     }
 
-    function enableUser($id) {
-        $this->command.='ip firewall address-list disable "'.$id.'"; ';
+    function enableUser() {
+        $this->command.='ip firewall address-list disable "'.$this->id.'"; ';
+        $this->command.='ppp secret enable "'.$this->id.'"; ';
     }
 
-    function disableUser($id) {
-        $this->command.='ip firewall address-list enable "'.$id.'"; ';	
+    function disableUser() {
+        $this->command.='ip firewall address-list enable "'.$this->id.'"; ';
+        $this->command.='ppp secret disable "'.$this->id.'"; ';
     }
 
-    function deleteUser($id) {
-	$this->command.='ip firewall address-list remove "'.$id.'"; ';
-	$this->command.='queue simple remove "'.$id.'"; ';
-	$this->command.='ppp secret remove "'.$id.'"; ';
+    function deleteUser() {
+	$this->command.='ip firewall address-list remove "'.$this->id.'"; ';
+	$this->command.='queue simple remove "'.$this->id.'"; ';
+	$this->command.='ppp secret remove "'.$this->id.'"; ';
 	//$this->command.='ip arp remove "'.$id.'"; ';
-	$this->command.='ip dhcp-server lease remove "'.$id.'"; ';
+	$this->command.='ip dhcp-server lease remove "'.$this->id.'"; ';
     }
 
-    function editUser($id, $local_ip, $vpn_ip, $mac, $upload_speed, $download_speed, $login, $password) {
-	$this->deleteUser($id);
-	$this->addUser($id, $local_ip, $vpn_ip, $mac, $upload_speed, $download_speed, $login, $password);
+    function editUser() {
+	$this->deleteUser();
+	$this->addUser();
     }
 
-    function changeUserSpeed ($id, $upload_speed, $download_speed, $vpn_ip) {
-        $this->command.='queue simple remove "'.$id.'"; ';
-	$this->command.='/queue simple add max-limit='.$upload_speed.'000/'.$download_speed.'000 name='.$id.' target-addresses='.$vpn_ip.'/32; ';
+    function changeUserSpeed () {
+        $this->command.='queue simple remove "'.$this->id.'"; ';
+	$this->command.='/queue simple add max-limit='.$this->upload_speed.'000/'.$this->download_speed.'000 name='.$this->id.' target-addresses='.$this->vpn_ip.'/32; ';
     }
 
     function doCommands($shell) {
-        $this->sendCommand($shell, $this->command);
+//        $this->sendCommand($shell, $this->command);
     }
 }
 ?>
