@@ -239,7 +239,7 @@
             echo "<tr><td>Дом</td><td>".$form->select('street_id', $Streets_list)."</td></tr>";
             echo $form->input('house_part', array('label'=>'Корпус:', 'before'=>'<tr><td>', 'between'=>'</td><td>', 'after'=>'</td></tr>'));
             echo $form->input('apt', array('label'=>'Квартира:', 'before'=>'<tr><td>', 'between'=>'</td><td>', 'after'=>'</td></tr>'));
-            echo $form->input('floor', array('label'=>'Подъезд:', 'before'=>'<tr><td>', 'between'=>'</td><td>', 'after'=>'</td></tr>'));
+            echo $form->input('entr', array('label'=>'Подъезд:', 'before'=>'<tr><td>', 'between'=>'</td><td>', 'after'=>'</td></tr>'));
             echo $form->input('floor', array('label'=>'Этаж:', 'before'=>'<tr><td>', 'between'=>'</td><td>', 'after'=>'</td></tr>'));
             echo $form->input('email', array('label'=>'E-Mail:', 'before'=>'<tr><td>', 'between'=>'</td><td>', 'after'=>'</td></tr>'));
             echo $form->input('tel', array('label'=>'Телефон:', 'cols'=>'25', 'rows'=>'2', 'before'=>'<tr><td style="padding-bottom: 10px;">', 'between'=>'</td><td style="padding-bottom: 10px;">', 'after'=>'</td></tr>'));
