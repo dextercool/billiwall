@@ -65,7 +65,7 @@ if ($user['User']['blocked']==true) $off="-"; else $off=date("d-m-Y", strtotime(
             <!-- Общая статистика пользователя -->
             <div class="container">
                 <div id="stat_userinfo">
-                    <div id="real_name"><b><? echo $user['User']['first_name'].' '.$user['User']['third_name'].' '$user['User']['second_name'] ?></b></div>
+                    <div id="real_name"><b><? echo $user['User']['first_name'].' '.$user['User']['third_name'].' '.$user['User']['second_name'] ?></b></div>
                     <div>
                         <table class="invisible_table">
                             <tr>
