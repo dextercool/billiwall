@@ -58,13 +58,15 @@ class UsersController extends AppController {
         if (!empty($this->data)) {
             $this->User->id=$this->data['User']['id'];
             $user=$this->User->find('first');
-            if ($user['User']['credit_balance']<=$this->data['User']['balance']) {
+            if  ($this->data['User']['balance']<0) $sum=$this->data['User']['balance'];
+            elseif ($user['User']['credit_balance']<=$this->data['User']['balance']) {
                 $sum=$this->data['User']['balance']-$user['User']['credit_balance'];
                 $this->data['User']['credit_balance']=0;
             } else {
                 $sum=0;
                 $this->data['User']['credit_balance']=$user['User']['credit_balance']-$this->data['User']['balance'];
             }
+
             $newBalance=$user['User']['balance']+$sum;
             $this->data['User']['balance']=$newBalance;
             if ($user['User']['blocked']==true)

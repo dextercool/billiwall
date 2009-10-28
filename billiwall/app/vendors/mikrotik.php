@@ -19,7 +19,7 @@ class Server {
         $methods = array ( 'kex' => 'diffie-hellman-group1-sha1' );
         $shell = ssh2_connect($this->host, 22, $methods);
         ssh2_auth_password($shell, $this->login_access, $this->password_access) or die("connect error!");
-	//$shell=1;
+//	$shell=1;
         return $shell;
     }
 
@@ -49,7 +49,7 @@ class Server {
 
     function disableUser() {
         $this->command.='ip firewall address-list enable "'.$this->id.'"; ';
-        $this->command.='ppp secret disable "'.$this->id.'"; ';
+        $this->command.='ppp secret disable "'.$this->id.'"; ';        
     }
 
     function deleteUser() {
