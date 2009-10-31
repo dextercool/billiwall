@@ -20,7 +20,7 @@ class StreetsController extends AppController {
 	if(empty($this->data)) {
 	    $this->data=$this->Street->read();
 	} else {
-	    $this->UnlimitedTariff->save($this->data);
+	    $this->Street->save($this->data);
 	    $this->Session->setFlash('Дом успешно изменен');
 	    $this->redirect($this->referer());
 	}
