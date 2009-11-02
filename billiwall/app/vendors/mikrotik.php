@@ -39,7 +39,6 @@ class Server {
 	$this->command.='queue simple add max-limit='.$this->upload_speed.'000/'.$this->download_speed.'000 name='.$this->id.' target-addresses='.$this->vpn_ip.'/32; ';
 	$this->command.='ppp secret add comment="'.$this->id.'" name='.$this->login.' password='.$this->password.' profile=global-vpn remote-address='.$this->vpn_ip.' service=pppoe; ';
 	$this->command.='ip dhcp-server lease add address='.$this->local_ip.' comment="'.$this->id.'" disabled=no mac-address='.$this->mac.'; ';
-	//$this->command.='ip arp add address='.$local_ip.' comment="'.$id.'" disabled=no interface=LAN mac-address='.$mac.'; ';
     }
 
     function enableUser() {
@@ -56,13 +55,13 @@ class Server {
 	$this->command.='ip firewall address-list remove "'.$this->id.'"; ';
 	$this->command.='queue simple remove "'.$this->id.'"; ';
 	$this->command.='ppp secret remove "'.$this->id.'"; ';
-	//$this->command.='ip arp remove "'.$id.'"; ';
 	$this->command.='ip dhcp-server lease remove "'.$this->id.'"; ';
     }
 
     function editUser() {
 	$this->deleteUser();
 	$this->addUser();
+        $this->enableUser();
     }
 
     function changeUserSpeed () {
