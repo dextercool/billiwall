@@ -32,7 +32,7 @@ class UsersController extends AppController {
             if ($this->data['User']['is_group']=="link_to") {
                 $this->data['User']['is_group']=false;
                 $this->data['User']['balance']=0;
-            }
+            } else $this->data['User']['group_id']=0;
 
             if ($this->data['User']['balance']==0) $this->data['User']['blocked']=true;
             $this->data['User']['role']='user';
