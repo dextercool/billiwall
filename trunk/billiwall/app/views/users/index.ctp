@@ -330,7 +330,7 @@
             echo '<tr style="height: 15px;"><td></td></tr>';
             echo '<tr><td colspan="2" style="border: 1px solid #acacac"><table>';
             echo '<tr><td><input type="radio" name="data[User][is_group]" value="link_to" onclick="linkTo();" /> Присоединить к:</td><td>'.$form->select('group_id', $UserGroups_list).'</td></tr>';
-            echo '<tr><td><input type="radio" name="data[User][is_group]" value="true" onclick="makeGroup();" /> Групповой акк</td><td><input type="radio" name="data[User][is_group]" value="false" checked="checked" onclick="noGroups();" /> Без групп</td></tr>';
+            echo '<tr><td><input type="radio" name="data[User][is_group]" value="1" onclick="makeGroup();" /> Групповой акк</td><td><input type="radio" name="data[User][is_group]" value="0" checked="checked" onclick="noGroups();" /> Без групп</td></tr>';
             echo '</table></td></tr>';
             //echo '<tr style="height: 15px;"><td></td></tr>';
 
