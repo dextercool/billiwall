@@ -16,7 +16,7 @@ class UsersController extends AppController {
             //$users_groups[]=$this->User->Query("SELECT * FROM `users` WHERE (`is_group`='1' AND `id`=".$user_group_header['User']['id'].") OR (`is_group`='0' AND `group_id`=".$user_group_header['User']['id'].")");
             $users_groups[]=$this->User->find('all', array('conditions'=>"(`User`.`is_group`='1' AND `User`.`id`=".$user_group_header['User']['id'].") OR (`User`.`is_group`='0' AND `User`.`group_id`=".$user_group_header['User']['id'].")"));
         }
-        $this->set('users_groups', $users_groups);
+        if (isset($users_groups)) $this->set('users_groups', $users_groups);
 
 
 
@@ -118,6 +118,7 @@ class UsersController extends AppController {
             if ($this->data['User']['speed_type']==1) $speed_types['1']="checked=\"checked\""; else $speed_types['1']="";
             if ($this->data['User']['speed_type']==2) $speed_types['2']="checked=\"checked\""; else $speed_types['2']="";
             if ($this->data['User']['speed_type']==3) $speed_types['3']="checked=\"checked\""; else $speed_types['3']="";
+            if ($speed_types['1']=="" && $speed_types['2']=="") $speed_types['3']="checked=\"checked\"";
             $this->set('Speed_types', $speed_types);
             if ($this->data['User']['is_group']==true) $is_group_id['2']="checked=\"checked\""; else $is_group_id['2']="";
             if ($this->data['User']['is_group']==false && $this->data['User']['group_id']!=0) $is_group_id['1']="checked=\"checked\""; else $is_group_id['1']="";
