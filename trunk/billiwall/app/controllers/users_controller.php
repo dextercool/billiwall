@@ -10,7 +10,16 @@ class UsersController extends AppController {
     }
 
     function index() {
-        $this->set('users', $this->User->find('all'));
+        $this->set('users', $this->User->find('all', array('conditions'=>array('is_group'=>'0', 'group_id'=>'0'))));
+        $user_group_headers=$this->User->find('all', array('conditions'=>array('is_group'=>'1')));
+        foreach ($user_group_headers as $user_group_header) {
+            //$users_groups[]=$this->User->Query("SELECT * FROM `users` WHERE (`is_group`='1' AND `id`=".$user_group_header['User']['id'].") OR (`is_group`='0' AND `group_id`=".$user_group_header['User']['id'].")");
+            $users_groups[]=$this->User->find('all', array('conditions'=>"(`User`.`is_group`='1' AND `User`.`id`=".$user_group_header['User']['id'].") OR (`User`.`is_group`='0' AND `User`.`group_id`=".$user_group_header['User']['id'].")"));
+        }
+        $this->set('users_groups', $users_groups);
+
+
+
         $this->set('menu_selected_item', 'users');
         //Using UnlimitedTariff model to generate it's list
         $this->loadModel('UnlimitedTariff');
@@ -21,8 +30,8 @@ class UsersController extends AppController {
 
     function add() {
         if (!empty($this->data)) {
-            if ($this->data['User']['is_group']=="no_group") $this->data['User']['is_group']=false;
-            elseif ($this->data['User']['is_group']=="link_to") {
+            //if ($this->data['User']['is_group']=="no_group") $this->data['User']['is_group']=false;
+            if ($this->data['User']['is_group']=="link_to") {
                 $this->data['User']['is_group']=false;
                 $this->data['User']['balance']=0;
             }
@@ -40,10 +49,19 @@ class UsersController extends AppController {
             $server->local_ip=$this->data['User']['local_ip'];
             $server->vpn_ip=$this->data['User']['vpn_ip'];
             $server->mac=$this->data['User']['mac'];
-            $server->upload_speed=$user['UnlimitedTariff']['upload_speed'];
-            $server->download_speed=$user['UnlimitedTariff']['download_speed'];
+            if ($this->data['User']['speed_type']=="1") {
+                $server->upload_speed=$user['UnlimitedTariff']['upload_speed'];
+                $server->download_speed=$user['UnlimitedTariff']['download_speed'];
+            } elseif ($this->data['User']['speed_type']=="2") {
+                $server->upload_speed=$this->data['User']['upload_speed'];
+                $server->upload_speed=$this->data['User']['download_speed'];
+            } elseif ($this->data['User']['speed_type']=="3") {
+                $server->total_speed=$user['User']['total_speed'];
+            }
+            $server->speed_type=$this->data['User']['speed_type'];
+
             $server->login=$this->data['User']['login'];
-            $server->password=$this->data['User']['password'];
+            $server->password=$this->data['User']['password'];            
             $server->addUser();
             if ($this->data['User']['balance']!=0) $server->enableUser();
             $server->doCommands($shell);
@@ -101,8 +119,18 @@ class UsersController extends AppController {
             if ($this->data['User']['speed_type']==2) $speed_types['2']="checked=\"checked\""; else $speed_types['2']="";
             if ($this->data['User']['speed_type']==3) $speed_types['3']="checked=\"checked\""; else $speed_types['3']="";
             $this->set('Speed_types', $speed_types);
+            if ($this->data['User']['is_group']==true) $is_group_id['2']="checked=\"checked\""; else $is_group_id['2']="";
+            if ($this->data['User']['is_group']==false && $this->data['User']['group_id']!=0) $is_group_id['1']="checked=\"checked\""; else $is_group_id['1']="";
+            if ($this->data['User']['is_group']==false && $this->data['User']['group_id']==0) $is_group_id['3']="checked=\"checked\""; else $is_group_id['3']="";
+            $this->set('is_group_id', $is_group_id);
+
         }
         else {
+            if ($this->data['User']['is_group']=="link_to") {
+                $this->data['User']['is_group']=false;
+                $this->data['User']['balance']=0;
+            }
+            
             $this->loadModel('UnlimitedTariff');
             $this->UnlimitedTariff->id=$this->data['User']['unlimited_tariff_id'];
             $unlimited_tariff=$this->UnlimitedTariff->find('first');
@@ -131,6 +159,17 @@ class UsersController extends AppController {
             $server->download_speed=$user['UnlimitedTariff']['download_speed'];
             $server->login=$this->data['User']['login'];
             $server->password=$this->data['User']['password'];
+            if ($this->data['User']['speed_type']=="1") {
+                $server->upload_speed=$user['UnlimitedTariff']['upload_speed'];
+                $server->download_speed=$user['UnlimitedTariff']['download_speed'];
+            } elseif ($this->data['User']['speed_type']=="2") {
+                $server->upload_speed=$this->data['User']['upload_speed'];
+                $server->upload_speed=$this->data['User']['download_speed'];
+            } elseif ($this->data['User']['speed_type']=="3") {
+                $server->total_speed=$user['User']['total_speed'];
+            }
+            $server->speed_type=$this->data['User']['speed_type'];
+
             $server->editUser();
             $server->doCommands($shell);
 
