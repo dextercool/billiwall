@@ -151,7 +151,7 @@
 
     <div id="table_part">
 
-            <? foreach ($users_groups as $user_group) {
+            <? if (!empty($users_groups)) foreach ($users_groups as $user_group) {
                 echo '<table class="db_table"><tr>
                 <th width="20" class="center">ID</th>
                 <th width="205">Имя</th>

@@ -120,8 +120,9 @@ class UsersController extends AppController {
             if ($this->data['User']['speed_type']==3) $speed_types['3']="checked=\"checked\""; else $speed_types['3']="";
             $this->set('Speed_types', $speed_types);
             if ($this->data['User']['is_group']==true) $is_group_id['2']="checked=\"checked\""; else $is_group_id['2']="";
-            elseif ($this->data['User']['is_group']==false && $this->data['User']['group_id']!=0) $is_group_id['1']="checked=\"checked\""; else $is_group_id['1']="";
-            else $is_group_id['3']="checked=\"checked\""; else $is_group_id['3']="";
+            if ($this->data['User']['is_group']==false && $this->data['User']['group_id']!=0) $is_group_id['1']="checked=\"checked\""; else $is_group_id['1']="";
+            if ($this->data['User']['is_group']==false && $this->data['User']['group_id']==0) $is_group_id['3']="checked=\"checked\""; else $is_group_id['3']="";
+            if ($is_group_id['1']=="" && $is_group_id['2']=="") $is_group_id['3']="checked=\"checked\"";
             $this->set('is_group_id', $is_group_id);
 
         }
