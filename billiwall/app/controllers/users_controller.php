@@ -18,8 +18,6 @@ class UsersController extends AppController {
         }
         if (isset($users_groups)) $this->set('users_groups', $users_groups);
 
-
-
         $this->set('menu_selected_item', 'users');
         //Using UnlimitedTariff model to generate it's list
         $this->loadModel('UnlimitedTariff');
@@ -115,11 +113,13 @@ class UsersController extends AppController {
             $this->set('UnlimitedTariffs_list', $this->User->UnlimitedTariff->find('list', array('fields'=>array('UnlimitedTariff.name'))));
             $this->set('Streets_list', $this->User->Street->find('list', array('fields'=>array('Street.name'))));
             $this->set('UserGroups_list', $this->User->find('list', array('fields'=>array('User.login'), 'conditions' => array('is_group' => 1))));
+
             if ($this->data['User']['speed_type']==1) $speed_types['1']="checked=\"checked\""; else $speed_types['1']="";
             if ($this->data['User']['speed_type']==2) $speed_types['2']="checked=\"checked\""; else $speed_types['2']="";
             if ($this->data['User']['speed_type']==3) $speed_types['3']="checked=\"checked\""; else $speed_types['3']="";
-            if ($speed_types['1']=="" && $speed_types['2']=="") $speed_types['3']="checked=\"checked\"";
+            if ($speed_types['3']=="" && $speed_types['2']=="") $speed_types['1']="checked=\"checked\"";
             $this->set('Speed_types', $speed_types);
+
             if ($this->data['User']['is_group']==true) $is_group_id['2']="checked=\"checked\""; else $is_group_id['2']="";
             if ($this->data['User']['is_group']==false && $this->data['User']['group_id']!=0) $is_group_id['1']="checked=\"checked\""; else $is_group_id['1']="";
             if ($this->data['User']['is_group']==false && $this->data['User']['group_id']==0) $is_group_id['3']="checked=\"checked\""; else $is_group_id['3']="";
