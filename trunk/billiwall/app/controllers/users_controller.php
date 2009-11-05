@@ -52,7 +52,7 @@ class UsersController extends AppController {
                 $server->download_speed=$user['UnlimitedTariff']['download_speed'];
             } elseif ($this->data['User']['speed_type']=="2") {
                 $server->upload_speed=$this->data['User']['upload_speed'];
-                $server->upload_speed=$this->data['User']['download_speed'];
+                $server->download_speed=$this->data['User']['download_speed'];
             } elseif ($this->data['User']['speed_type']=="3") {
                 $server->total_speed=$user['User']['total_speed'];
             }
