@@ -161,6 +161,7 @@ class UsersController extends AppController {
             $server->download_speed=$user['UnlimitedTariff']['download_speed'];
             $server->login=$this->data['User']['login'];
             $server->password=$this->data['User']['password'];
+            //print_r($this->data);
             if ($this->data['User']['speed_type']=="1") {
                 $server->upload_speed=$user['UnlimitedTariff']['upload_speed'];
                 $server->download_speed=$user['UnlimitedTariff']['download_speed'];
@@ -168,7 +169,7 @@ class UsersController extends AppController {
                 $server->upload_speed=$this->data['User']['upload_speed'];
                 $server->download_speed=$this->data['User']['download_speed'];
             } elseif ($this->data['User']['speed_type']=="3") {
-                $server->total_speed=$user['User']['total_speed'];
+                $server->total_speed=$this->data['User']['total_speed'];
             }
             $server->speed_type=$this->data['User']['speed_type'];
 
@@ -234,7 +235,7 @@ class UsersController extends AppController {
     }
 
     function take_payment() {
-        if ($_SERVER['REMOTE_ADDR']=='10.0.10.1') {
+        if ($_SERVER['REMOTE_ADDR']=='10.10.10.1') {
             $users=$this->User->find('all');
             foreach ($users as $user) {
                 if ($user['User']['blocked']==false) {
@@ -249,7 +250,7 @@ class UsersController extends AppController {
                         $server->id=$user['User']['id'];
                         $server->disableUser();
                         $server->doCommands($shell);
-                        $deactivatedUsers[]=$user['User']['real_name'];
+                        $deactivatedUsers[]=$user['User']['first_name'].' '.$user['User']['third_name']. ' '.$user['User']['second_name'];
                         $user['User']['blocked']=true;
                         $this->User->save($user);
                     }

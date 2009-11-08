@@ -1,6 +1,6 @@
 <?php
 class Server {
-    var $host="10.0.10.1";
+    var $host="10.10.10.1";
     var $login_access="billing";
     var $password_access="101";
     var $command="";
@@ -37,9 +37,14 @@ class Server {
     }
 
     function addUser() {
+        //echo $this->speed_type;
+        //echo $this->total_speed;
+        //echo 'queue simple add name='.$this->id.' target-addresses='.$this->vpn_ip.'/32 total-max-limit='.$this->total_speed.'000; ';
         $this->command.='ip firewall address-list add address='.$this->vpn_ip.' list=vpn-access comment='.$this->id.'; ';
 	if ($this->speed_type=="1" || $this->speed_type=="2") $this->command.='queue simple add max-limit='.$this->upload_speed.'000/'.$this->download_speed.'000 name='.$this->id.' target-addresses='.$this->vpn_ip.'/32; ';
-        elseif ($this->speed_type=="3") $this->command.='queue simple add name='.$this->id.' target-addresses='.$this->vpn_ip.'/32 total-max-limit='.$this->total_speed.'000; ';
+        elseif ($this->speed_type=="3") {
+            $this->command.='queue simple add name='.$this->id.' target-addresses='.$this->vpn_ip.'/32 total-max-limit='.$this->total_speed.'000; ';            
+        }
 	$this->command.='ppp secret add comment="'.$this->id.'" name='.$this->login.' password='.$this->password.' profile=global-vpn remote-address='.$this->vpn_ip.' service=pppoe; ';
 	$this->command.='ip dhcp-server lease add address='.$this->local_ip.' comment="'.$this->id.'" disabled=no mac-address='.$this->mac.'; ';
     }
@@ -73,6 +78,7 @@ class Server {
     }
 
     function doCommands($shell) {
+        //echo $this->command;
         $this->sendCommand($shell, $this->command);
     }
 }
