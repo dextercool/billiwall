@@ -174,6 +174,7 @@ class UsersController extends AppController {
             $server->speed_type=$this->data['User']['speed_type'];
 
             $server->editUser();
+            if ($user['User']['balance']>=$user['UnlimitedTariff']['value']) $server->enableUser(); else $server->disableUser();
             $server->doCommands($shell);
 
             $this->data['User']['hashedPassword']=$this->Auth->password($this->data['User']['password']);
