@@ -72,7 +72,7 @@ class Server {
     function editUser() {
 	$this->deleteUser();
 	$this->addUser();
-        $this->enableUser();
+        //$this->enableUser();
     }
 
     function changeUserSpeed () {
