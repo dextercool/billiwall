@@ -15,15 +15,13 @@ class Server {
     var $password;
     var $speed_type;
     var $total_speed;
+    var $usersgroup_ips;
 
     function connect() {
         if (!function_exists("ssh2_connect")) die("function ssh2_connect doesn't exist");
         $methods = array ( 'kex' => 'diffie-hellman-group1-sha1' );
-        //echo "123";
         $shell = ssh2_connect($this->host, 22, $methods) or die("connect error!");
-        //echo "456";
         ssh2_auth_password($shell, $this->login_access, $this->password_access) or die("auth error!");
-        //echo "789";
 //	$shell=1;
         return $shell;
     }
@@ -44,12 +42,21 @@ class Server {
         //echo $this->total_speed;
         //echo 'queue simple add name='.$this->id.' target-addresses='.$this->vpn_ip.'/32 total-max-limit='.$this->total_speed.'000; ';
         $this->command.='ip firewall address-list add address='.$this->vpn_ip.' list=vpn-access comment='.$this->id.'; ';
-	if ($this->speed_type=="1" || $this->speed_type=="2") $this->command.='queue simple add max-limit='.$this->upload_speed.'000/'.$this->download_speed.'000 name='.$this->id.' target-addresses='.$this->vpn_ip.'/32; ';
-        elseif ($this->speed_type=="3") {
+	if ($this->speed_type=="1" || $this->speed_type=="2") {
+            $this->command.='queue simple add max-limit='.$this->upload_speed.'000/'.$this->download_speed.'000 name='.$this->id.' target-addresses='.$this->usersgroup_ips.'; ';
+        } elseif ($this->speed_type=="3") {
             $this->command.='queue simple add name='.$this->id.' target-addresses='.$this->vpn_ip.'/32 total-max-limit='.$this->total_speed.'000; ';            
         }
 	$this->command.='ppp secret add caller-id="'.$this->mac.'" comment="'.$this->id.'" name='.$this->login.' password='.$this->password.' profile=global-vpn remote-address='.$this->vpn_ip.' service=pppoe; ';
 	$this->command.='ip dhcp-server lease add address='.$this->local_ip.' comment="'.$this->id.'" disabled=no mac-address='.$this->mac.'; ';
+    }
+
+    function updateGroup() {
+        if ($this->speed_type=="1" || $this->speed_type=="2") {
+            $this->command.='queue simple add max-limit='.$this->upload_speed.'000/'.$this->download_speed.'000 name='.$this->id.' target-addresses='.$this->usersgroup_ips.'; ';
+        } elseif ($this->speed_type=="3") {
+            $this->command.='queue simple add name='.$this->id.' target-addresses='.$this->usersgroup_ips.'/32 total-max-limit='.$this->total_speed.'000; ';
+        }
     }
 
     function enableUser() {
@@ -72,7 +79,6 @@ class Server {
     function editUser() {
 	$this->deleteUser();
 	$this->addUser();
-        //$this->enableUser();
     }
 
     function changeUserSpeed () {
@@ -81,7 +87,7 @@ class Server {
     }
 
     function doCommands($shell) {
-//        echo $this->command;
+        echo $this->command;
         $this->sendCommand($shell, $this->command);
     }
 }
