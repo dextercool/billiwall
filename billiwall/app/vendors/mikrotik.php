@@ -46,6 +46,8 @@ class Server {
             $this->command.='queue simple add max-limit='.$this->upload_speed.'000/'.$this->download_speed.'000 name='.$this->id.' target-addresses='.$this->usersgroup_ips.'; ';
         } elseif ($this->speed_type=="3") {
             $this->command.='queue simple add name='.$this->id.' target-addresses='.$this->vpn_ip.'/32 total-max-limit='.$this->total_speed.'000; ';            
+        } elseif ($this->speed_type=="4") {
+            $this->command.='queue simple add name='.$this->id.' target-addresses='.$this->vpn_ip.'/32 total-max-limit='.$this->download_speed.'000; ';
         }
 	$this->command.='ppp secret add caller-id="'.$this->mac.'" comment="'.$this->id.'" name='.$this->login.' password='.$this->password.' profile=global-vpn remote-address='.$this->vpn_ip.' service=pppoe; ';
 	$this->command.='ip dhcp-server lease add address='.$this->local_ip.' comment="'.$this->id.'" disabled=no mac-address='.$this->mac.'; ';
@@ -83,7 +85,7 @@ class Server {
 
     function changeUserSpeed () {
         $this->command.='queue simple remove "'.$this->id.'"; ';
-	$this->command.='/queue simple add max-limit='.$this->upload_speed.'000/'.$this->download_speed.'000 name='.$this->id.' target-addresses='.$this->vpn_ip.'/32; ';
+	$this->command.='queue simple add max-limit='.$this->upload_speed.'000/'.$this->download_speed.'000 name='.$this->id.' target-addresses='.$this->vpn_ip.'/32; ';
     }
 
     function doCommands($shell) {
